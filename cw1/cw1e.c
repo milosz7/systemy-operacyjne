@@ -8,9 +8,9 @@
 int main()
 {
   int status;
-  printf("Proces macierzysty:\n");
+  printf("Parent process:\n");
   display_process_data();
-  printf("Procesy potomne:\n");
+  printf("Child processes:\n");
   for (int i = 0; i < 3; i++)
   {
     int pid = fork();
