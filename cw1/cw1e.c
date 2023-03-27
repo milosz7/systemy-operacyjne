@@ -17,11 +17,14 @@ int main()
     if (pid == -1)
     {
       perror("fork error");
-      exit(1);
+      exit(EXIT_FAILURE);
     }
     if (pid == 0)
     {
-      setpgid(0, 0);
+      if (setpgid(0, 0) == -1) {
+        perror("Setpgid error.\n");
+        exit(EXIT_FAILURE);
+      }
       display_process_data();
     }
     if (pid > 0)
