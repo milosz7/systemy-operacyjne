@@ -1,3 +1,5 @@
+Aby wyświetlić listę dostępnych poleceń Makefile należy wywołać komendę "make"
+
 Ćwiczenie 3a
 
 Aby uruchomić program należy wpisać w terminalu:
