@@ -25,7 +25,7 @@ FIFO_PATH := ./pipe.FIFO
 help:
 	@echo "make all - kompiluje wszystkie programy"
 	@echo "make print - wypisuje nazwy programów do skompilowania"
-	@echo "make cw5x - kompiluje program do ćwiczenia 5x , gdzie x to a lub b"
+	@echo "make cw5a - kompiluje program do ćwiczenia 5a"
 	@echo "make run-cw5x - uruchamia program do ćwiczenia 5x, gdzie x to a lub b"
 	@echo "make clean - usuwa wszystkie pliki stworzone przez make"
 
