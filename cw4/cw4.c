@@ -8,9 +8,9 @@
 
 #define REQUIRED_ARGS_AMOUNT 3
 #define READ_CHUNK 16
-#define WRITE_CHUNK 12
-#define OPEN_MODE 0666
-#define MAX_SLEEP_IN_SECS 5
+#define WRITE_CHUNK 10
+#define OPEN_MODE 0644
+#define MAX_SLEEP_IN_SECS 3
 
 int random_sleep()
 {
@@ -29,8 +29,8 @@ int main(int argc, char *argv[])
   ssize_t bytes_read, pipe_bytes_read;
   char *input_filename = argv[1];
   char *output_filename = argv[2];
-  char read_buffer[READ_CHUNK];
-  char write_buffer[WRITE_CHUNK];
+  char read_buffer[READ_CHUNK + 1];
+  char write_buffer[WRITE_CHUNK + 1];
 
   if (pipe(filedes) == -1)
   {
@@ -47,6 +47,7 @@ int main(int argc, char *argv[])
 
   if (pid == 0)
   {
+    close(filedes[1]);
 
     ssize_t output_descriptor = open(output_filename, O_WRONLY | O_CREAT | O_TRUNC, OPEN_MODE);
 
@@ -66,7 +67,12 @@ int main(int argc, char *argv[])
       if (pipe_bytes_read)
       {
         printf("-----------\n");
-        printf("Recieved data: %s\n", write_buffer);
+        printf("Recieved data: ");
+        for (int i = 0; i < pipe_bytes_read; i++)
+        {
+          printf("%c", write_buffer[i]);
+        }
+        printf("\n");
       }
       if (!pipe_bytes_read)
       {
@@ -82,6 +88,8 @@ int main(int argc, char *argv[])
     close(filedes[0]);
     exit(EXIT_SUCCESS);
   }
+
+  close(filedes[0]);
 
   ssize_t input_descriptor = open(input_filename, O_RDONLY);
 
@@ -100,7 +108,12 @@ int main(int argc, char *argv[])
     if (bytes_read)
     {
       printf("-----------\n");
-      printf("Sent data: %s\n", read_buffer);
+      printf("Sent data: ");
+      for (int i = 0; i < bytes_read; i++)
+      {
+        printf("%c", read_buffer[i]);
+      }
+      printf("\n");
     }
     if (write(filedes[1], read_buffer, bytes_read) == -1)
     {
