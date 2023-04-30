@@ -8,3 +8,6 @@ poprawnie należy podać jako ścieżkę "./pipe.FIFO" - w innym wypadku funkcja
 oraz signal nie będzie działała poprawnie.
 
 https://stackoverflow.com/questions/6970224/providing-passing-argument-to-signal-handler
+
+Ćwiczenie 5b polega na stworzeniu potoku nazwanego, a następnie współbieżnym uruchomieniu programów do czytania oraz zapisywania. Można to manualnie, lecz komenda "make run-cw5b"
+wykonuje cały proces za nas.
