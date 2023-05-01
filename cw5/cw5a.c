@@ -19,7 +19,10 @@
 
 void clear_mkfifo()
 {
-  unlink(FIFO_PATH);
+  if (unlink(FIFO_PATH) == -1) {
+    perror("Mkfifo pipe unlink error. You have to remove it manually");
+    exit(EXIT_FAILURE);
+  }
 }
 
 int main(int argc, char *argv[])
@@ -62,7 +65,6 @@ int main(int argc, char *argv[])
   {
     execlp(WRITE_EXEC, WRITE_EXEC, output_filename, pipe_path, NULL);
     perror("execlp error");
-    unlink(pipe_path);
     exit(EXIT_FAILURE);
   }
 
