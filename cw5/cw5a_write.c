@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 
 #define REQUIRED_ARGS_AMOUNT 3
 #define WRITE_CHUNK 7
@@ -28,6 +29,7 @@ int main(int argc, char *argv[])
   char buffer[WRITE_CHUNK + 1];
   char *output_filename = argv[1];
   char *pipe_path = argv[2];
+  const char recieved_msg[] = "-----\nRecieved data: ";
   ssize_t bytes_read;
 
   ssize_t pipedes_read = open(pipe_path, O_RDONLY, OPEN_MODE);
@@ -52,12 +54,12 @@ int main(int argc, char *argv[])
     }
     if (bytes_read)
     {
-      printf("-----\nRecieved data: ");
+      write(STDOUT_FILENO, &recieved_msg, strlen(recieved_msg));
       for (int i = 0; i < bytes_read; i++)
       {
-        printf("%c", buffer[i]);
+        write(STDOUT_FILENO, &buffer[i], sizeof(char));
       }
-      printf("\n");
+      write(STDOUT_FILENO, "\n", sizeof(char));
     }
     if (!bytes_read)
     {

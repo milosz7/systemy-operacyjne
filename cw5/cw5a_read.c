@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 
 #define REQUIRED_ARGS_AMOUNT 3
 #define READ_CHUNK 10
@@ -27,6 +28,7 @@ int main(int argc, char *argv[])
 
   char buffer[READ_CHUNK + 1];
   char *input_filename = argv[1];
+  const char sent_msg[] = "-----\nSent data: ";
   char *pipe_path = argv[2];
   ssize_t bytes_read;
 
@@ -43,7 +45,6 @@ int main(int argc, char *argv[])
   {
     if (bytes_read == -1)
     {
-      printf("sex");
       perror("Read function call error");
       exit(EXIT_FAILURE);
     }
@@ -54,12 +55,12 @@ int main(int argc, char *argv[])
     }
     if (bytes_read)
     {
-      printf("-----\nSent data: ");
+      write(STDOUT_FILENO, &sent_msg, strlen(sent_msg));
       for (int i = 0; i < bytes_read; i++)
       {
-        printf("%c", buffer[i]);
+        write(STDOUT_FILENO, &buffer[i], sizeof(char));
       }
-      printf("\n");
+      write(STDOUT_FILENO, "\n", sizeof(char));
     }
     sleep(random_sleep());
   }

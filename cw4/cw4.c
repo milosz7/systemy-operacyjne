@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 
 #define REQUIRED_ARGS_AMOUNT 3
 #define READ_CHUNK 16
@@ -31,6 +32,8 @@ int main(int argc, char *argv[])
   char *output_filename = argv[2];
   char read_buffer[READ_CHUNK + 1];
   char write_buffer[WRITE_CHUNK + 1];
+  const char recieved_msg[] = "-----------\nRecieved data: ";
+  const char sent_msg[] = "-----------\nSent data: ";
 
   if (pipe(filedes) == -1)
   {
@@ -66,13 +69,12 @@ int main(int argc, char *argv[])
       }
       if (pipe_bytes_read)
       {
-        printf("-----------\n");
-        printf("Recieved data: ");
+        write(STDOUT_FILENO, &recieved_msg, strlen(recieved_msg));
         for (int i = 0; i < pipe_bytes_read; i++)
         {
-          printf("%c", write_buffer[i]);
+          write(STDOUT_FILENO, &write_buffer[i], sizeof(char));
         }
-        printf("\n");
+        write(STDOUT_FILENO, "\n", sizeof(char));
       }
       if (!pipe_bytes_read)
       {
@@ -107,13 +109,12 @@ int main(int argc, char *argv[])
     }
     if (bytes_read)
     {
-      printf("-----------\n");
-      printf("Sent data: ");
+      write(STDOUT_FILENO, &sent_msg, strlen(sent_msg));
       for (int i = 0; i < bytes_read; i++)
       {
-        printf("%c", read_buffer[i]);
+        write(STDOUT_FILENO, &read_buffer[i], sizeof(char));
       }
-      printf("\n");
+      write(STDOUT_FILENO, "\n", sizeof(char));
     }
     if (write(filedes[1], read_buffer, bytes_read) == -1)
     {
