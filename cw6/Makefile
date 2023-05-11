@@ -27,6 +27,13 @@ EX_COUNTER_FILENAME := counter.txt
 EX_SECTIONS_NUMBER := 2
 EX_PROCESSES_NUMBER := 2
 
+.PHONY: print
+print:
+	@echo "make all" - kompiluje wszystkie programy
+	@echo "make cw6" - kompiluje program do ćwiczenia 6
+	@echo "make run-cw6" - kompiluje i uruchamia program do ćwiczenia 6
+	@echo "make clean" - usuwa wszystkie pliki stworzone przez Makefile
+
 $(LIB_STAT): $(LIB_OBJS)
 	$(AR) $(ARFLAGS) $@ $?
 	mkdir -p $(LIB_DIR)
@@ -42,12 +49,7 @@ $(OBJS): %.o: %.c $(LIB_STAT)
 $(EXECS): %.x: %.o $(LIB_STAT)
 	$(LD) -o $@ $(LFLAGS) $< -L$(LIB_DIR) -l$(LIB_NAME) $(LDLIBS)
 
-.PHONY: print
-print:
-	@echo "make all" - kompiluje wszystkie programy
-	@echo "make cw6" - kompiluje program do ćwiczenia 6
-	@echo "make run-cw6" - kompiluje i uruchamia program do ćwiczenia 6
-	@echo "make clean" - usuwa wszystkie pliki stworzone przez Makefile
+
 
 .PHONY: all
 all: $(OBJS) $(EXECS)
