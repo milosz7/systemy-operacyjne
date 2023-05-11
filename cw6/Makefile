@@ -49,8 +49,6 @@ $(OBJS): %.o: %.c $(LIB_STAT)
 $(EXECS): %.x: %.o $(LIB_STAT)
 	$(LD) -o $@ $(LFLAGS) $< -L$(LIB_DIR) -l$(LIB_NAME) $(LDLIBS)
 
-
-
 .PHONY: all
 all: $(OBJS) $(EXECS)
 
