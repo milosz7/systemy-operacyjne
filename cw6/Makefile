@@ -32,11 +32,22 @@ $(LIB_STAT): $(LIB_OBJS)
 	mkdir -p $(LIB_DIR)
 	mv $(LIB_STAT) $(LIB_DIR)
 
+.PHONY: $(NAMES)
+	
+$(NAMES): %: %.x | %.o
+
 $(OBJS): %.o: %.c $(LIB_STAT)
 	$(CO) -c $(CFLAGS) $< -o $@
 
 $(EXECS): %.x: %.o $(LIB_STAT)
 	$(LD) -o $@ $(LFLAGS) $< -L$(LIB_DIR) -l$(LIB_NAME) $(LDLIBS)
+
+.PHONY: print
+print:
+	@echo "make all" - kompiluje wszystkie programy
+	@echo "make cw6" - kompiluje program do ćwiczenia 6
+	@echo "make run-cw6" - kompiluje i uruchamia program do ćwiczenia 6
+	@echo "make clean" - usuwa wszystkie pliki stworzone przez Makefile
 
 .PHONY: all
 all: $(OBJS) $(EXECS)
