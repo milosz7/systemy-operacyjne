@@ -24,7 +24,7 @@ ssize_t open_file(char *name, int oflags, mode_t mode);
 int main(int argc, char *argv[])
 {
     sem_t *sem = open_sem(SEMAPHORE_NAME, O_RDWR);
-    int process_sections_amount = (int)strtod(argv[1], NULL) | 2;
+    int process_sections_amount = (int)strtod(argv[1], NULL);
     char *counter_filename = argv[2];
     unsigned int pid = getpid();
     char counter_buffer[5];
@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
         current_value += 1;
         int current_length = (int)floor(log10(current_value)) + 2;
         char write_buffer[current_length];
-        sprintf(write_buffer, "%d", current_value);
+        sprintf(write_buffer, "%d\n", current_value);
 
         counter_descriptor = open_file(counter_filename, O_WRONLY | O_TRUNC, OPEN_MODE);
         if (write(counter_descriptor, write_buffer, current_length) == -1)
