@@ -5,6 +5,7 @@
 #include <sys/wait.h>
 #include <signal.h>
 #include <string.h>
+#include <math.h>
 
 #include "source/create_sem.h"
 #include "source/getval_sem.h"
@@ -18,6 +19,8 @@
 #define INITIAL_SEM_VALUE 0
 
 void exit_cleanup();
+ssize_t open_file(char *name, int oflags, mode_t mode);
+void assert_value(int expected_value, char *data_file);
 
 int main(int argc, char *argv[])
 {
@@ -35,6 +38,7 @@ int main(int argc, char *argv[])
     int processes_amount = (int)strtod(argv[2], NULL);
     char *process_sections_amount = argv[3];
     char *data_filename = argv[4];
+    int expected_value = (int)strtod(process_sections_amount, NULL) * processes_amount;
 
     if (signal(SIGINT, exit_cleanup) == SIG_ERR)
     {
@@ -73,7 +77,7 @@ int main(int argc, char *argv[])
         }
         if (pid == 0)
         {
-            execlp(process_creator_exec, process_creator_filename, process_sections_amount, data_filename, NULL); // dodac zmienna jako argument
+            execlp(process_creator_exec, process_creator_filename, process_sections_amount, data_filename, NULL);
             perror("execlp error");
             exit(EXIT_FAILURE);
         }
@@ -82,10 +86,39 @@ int main(int argc, char *argv[])
     {
         wait(NULL);
     }
+    assert_value(expected_value, data_filename);
     exit(EXIT_SUCCESS);
 }
 
 void exit_cleanup()
 {
     unlink_sem(SEMAPHORE_NAME);
+}
+
+ssize_t open_file(char *name, int oflags, mode_t mode)
+{
+    ssize_t descriptor = open(name, oflags, mode);
+    if (descriptor == -1)
+    {
+        perror("Open function call error");
+        exit(EXIT_FAILURE);
+    }
+
+    return descriptor;
+}
+
+void assert_value(int expected_value, char *data_file)
+{
+    int buffer_size = (int)floor(log10(expected_value)) + 2;
+    char file_buffer[buffer_size];
+    ssize_t descriptor = open_file("counter.txt", O_RDONLY, OPEN_MODE);
+    if (read(descriptor, file_buffer, buffer_size) == -1)
+    {
+        perror("Read function call error");
+        exit(EXIT_FAILURE);
+    }
+    close(descriptor);
+    printf("-----\n");
+    printf("Expected value: %d\n", expected_value);
+    printf("File value: %s\n", file_buffer);
 }
