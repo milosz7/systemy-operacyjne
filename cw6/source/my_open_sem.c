@@ -1,6 +1,6 @@
-#include "open_sem.h"
+#include "my_open_sem.h"
 
-sem_t *open_sem(char *name, int oflags)
+sem_t *my_open_sem(char *name, int oflags)
 {
     sem_t *sem;
     if ((sem = sem_open(name, oflags)) == SEM_FAILED)

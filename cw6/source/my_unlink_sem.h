@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#ifndef CLOSE_SEM_H
-#define CLOSE_SEM_H
-void close_sem(sem_t *sem);
+#ifndef UNLINK_SEM_H
+#define UNLINK_SEM_H
+void my_unlink_sem(char *name);
 #endif

@@ -1,6 +1,6 @@
-#include "unlink_sem.h"
+#include "my_unlink_sem.h"
 
-void unlink_sem(char *name)
+void my_unlink_sem(char *name)
 {
     if (sem_unlink(name) == -1)
     {

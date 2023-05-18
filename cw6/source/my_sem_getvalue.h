@@ -6,7 +6,7 @@
 #ifndef GETVAL_SEM_H
 #define GETVAL_SEM_H
 
-//Function to retrieve a semaphore current value.
-int getval_sem(sem_t *sem);
+// Function to retrieve a semaphore current value.
+int my_sem_getvalue(sem_t *sem);
 
 #endif

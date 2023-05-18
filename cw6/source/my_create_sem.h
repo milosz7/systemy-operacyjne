@@ -3,10 +3,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#ifndef OPEN_SEM_H
-#define OPEN_SEM_H
+#ifndef CREATE_SEM_H
+#define CREATE_SEM_H
 
 // Function to open a semaphore with error handling
-sem_t *open_sem(char *name, int oflags);
+sem_t *my_create_sem(char *name, mode_t mode, int oflag, int start_val);
 
 #endif

@@ -1,6 +1,6 @@
-#include "post_sem.h"
+#include "my_post_sem.h"
 
-void post_sem(sem_t *sem)
+void my_post_sem(sem_t *sem)
 {
     if (sem_post(sem) == -1)
     {

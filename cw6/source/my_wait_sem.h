@@ -6,5 +6,5 @@
 #ifndef WAIT_SEM_H
 #define WAIT_SEM_H
 // Function to tell the program to wait for sem to be posted.
-void wait_sem(sem_t *sem);
+void my_wait_sem(sem_t *sem);
 #endif

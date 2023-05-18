@@ -1,6 +1,6 @@
-#include "getval_sem.h"
+#include "my_sem_getvalue.h"
 
-int getval_sem(sem_t *sem)
+int my_sem_getvalue(sem_t *sem)
 {
     int sem_value;
 

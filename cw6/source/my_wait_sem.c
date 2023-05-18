@@ -1,6 +1,6 @@
-#include "wait_sem.h"
+#include "my_wait_sem.h"
 
-void wait_sem(sem_t *sem)
+void my_wait_sem(sem_t *sem)
 {
     if (sem_wait(sem) == -1)
     {

@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#ifndef UNLINK_SEM_H
-#define UNLINK_SEM_H
-void unlink_sem(char *name);
+#ifndef POST_SEM_H
+#define POST_SEM_H
+void my_post_sem(sem_t *sem);
 #endif
