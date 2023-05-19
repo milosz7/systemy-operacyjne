@@ -7,10 +7,10 @@
 #include <string.h>
 #include <math.h>
 
-#include "source/create_sem.h"
-#include "source/getval_sem.h"
-#include "source/unlink_sem.h"
-#include "source/post_sem.h"
+#include "source/my_create_sem.h"
+#include "source/my_sem_getvalue.h"
+#include "source/my_unlink_sem.h"
+#include "source/my_post_sem.h"
 
 #define REQUIRED_ARGS_AMOUNT 5
 #define SEMAPHORE_NAME "/semaphore"
@@ -52,10 +52,10 @@ int main(int argc, char *argv[])
         exit(EXIT_FAILURE);
     }
 
-    sem_t *sem = create_sem(SEMAPHORE_NAME, OPEN_MODE, O_CREAT | O_EXCL, INITIAL_SEM_VALUE);
-    post_sem(sem);
+    sem_t *sem = my_create_sem(SEMAPHORE_NAME, OPEN_MODE, O_CREAT | O_EXCL, INITIAL_SEM_VALUE);
+    my_post_sem(sem);
 
-    printf("Semaphore starting value: %d\n", getval_sem(sem));
+    printf("Semaphore starting value: %d\n", my_sem_getvalue(sem));
     printf("Process ID: %d\n", getpid());
 
     ssize_t counter_descriptor = open(data_filename, O_WRONLY | O_TRUNC, OPEN_MODE);
@@ -92,7 +92,7 @@ int main(int argc, char *argv[])
 
 void exit_cleanup()
 {
-    unlink_sem(SEMAPHORE_NAME);
+    my_unlink_sem(SEMAPHORE_NAME);
 }
 
 ssize_t open_file(char *name, int oflags, mode_t mode)
