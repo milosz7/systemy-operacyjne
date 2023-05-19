@@ -1,6 +1,6 @@
 #include "my_munmap.h"
 
-void my_unmap(void *addr, size_t length)
+void my_munmap(void *addr, size_t length)
 {
     if (munmap(addr, length) == -1)
     {
