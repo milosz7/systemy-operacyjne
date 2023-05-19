@@ -5,6 +5,8 @@ LD     	:= $(CO)
 AR     	:= ar
 ARFLAGS := rsv
 
+NAMES := $(patsubst %.c,%,$(wildcard *.c))
+
 EXECS_S := $(patsubst %,%s.x,$(NAMES))
 EXECS_D1 := $(patsubst %,%d1.x,$(NAMES))
 EXECS_D2 := $(patsubst %,%d2.x,$(NAMES))
@@ -46,6 +48,12 @@ EX_PRODUCER_NAME_EXEC_D2 := $(EX_PRODUCER_NAME)d2.x
 EX_NAME_EXEC_S := $(EX_NAME)s.x
 EX_NAME_EXEC_D1 := $(EX_NAME)d1.x
 EX_NAME_EXEC_D2 := $(EX_NAME)d2.x
+
+.PHONY: print
+print:
+	@echo "\n\"make cw7s / cw7d1 / dw7d2\" - kompiluje program do ćwiczenia 7 kolejno używając biblioteki statycznej / dzielonej / dzielonej dołączanej na drugi sposób"
+	@echo "\n\"make run-cw7s / cw7d1 / cw7d2\" - kompiluje i uruchamia program do ćwiczenia 7 kolejno używając biblioteki statycznej / dzielonej / dzielonej dołączanej na drugi sposób"
+	@echo "\n\"make all\" - kompiluje program i biblioteki na wszystkie możliwe powyżej sposoby jednocześnie"
 
 $(LIB_STAT): $(LIB_OBJS_SEM) $(LIB_OBJS_SHM)
 	$(AR) $(ARFLAGS) $@ $?
