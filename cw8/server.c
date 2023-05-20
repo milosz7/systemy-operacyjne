@@ -54,7 +54,10 @@ int main()
     while (1)
     {
         my_mq_recieve(server_mq, msg_buffer, sizeof(msg_buffer), &prio);
+        printf("Recieved request: %s\n", msg_buffer);
+        sleep(COMPUTATION_TIME_IN_S);
         double result = process_msg(msg_buffer, client_mq_name);
+        printf("Computation result: %lf\n", result);
         char full_result[DEFAULT_MSGSIZE_IN_BYTES / sizeof(char)];
 
         if (result == INFINITY)
