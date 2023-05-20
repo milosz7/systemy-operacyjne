@@ -83,7 +83,7 @@ int main(int argc, char *argv[])
     my_close_sem(consumer_sem);
     my_close_sem(producer_sem);
     my_munmap(shm, sizeof(SharedMEM));
-    exit(EXIT_SUCCESS);
+    _exit(EXIT_SUCCESS);
 }
 
 int isEOF(char *buf)

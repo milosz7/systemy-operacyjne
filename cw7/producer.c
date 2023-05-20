@@ -78,7 +78,7 @@ int main(int argc, char *argv[])
     my_close_sem(producer_sem);
     my_munmap(shm, sizeof(SharedMEM));
     my_close(shm_fd);
-    exit(EXIT_SUCCESS);
+    _exit(EXIT_SUCCESS);
 }
 
 void print_data(char *data)
