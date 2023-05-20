@@ -31,6 +31,7 @@ typedef struct
 } SharedMEM;
 
 void exit_cleanup();
+void signal_cleanup();
 void prefix_filename(char *filename, char dest[]);
 
 int main(int argc, char *argv[])
@@ -56,7 +57,7 @@ int main(int argc, char *argv[])
         exit(EXIT_FAILURE);
     }
 
-    if (signal(SIGINT, exit_cleanup) == SIG_ERR)
+    if (signal(SIGINT, signal_cleanup) == SIG_ERR)
     {
         perror("Signal handler error");
         exit(EXIT_FAILURE);
@@ -112,6 +113,11 @@ void exit_cleanup()
     my_unlink_sem(SEMAPHORE_PROD_NAME);
     my_unlink_sem(SEMAPHORE_CONS_NAME);
     my_shm_unlink(SHM_NAME);
+}
+
+void signal_cleanup()
+{
+    exit(EXIT_FAILURE);
 }
 
 void prefix_filename(char *filename, char dest[])
