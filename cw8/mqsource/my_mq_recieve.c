@@ -1,6 +1,6 @@
 #include "my_mq_recieve.h"
 
-void my_mq_recieve(mqd_t mqdes, char *msg_ptr, size_t msg_len, int *msg_prio)
+void my_mq_recieve(mqd_t mqdes, char *msg_ptr, size_t msg_len, unsigned int *msg_prio)
 {
     if (mq_receive(mqdes, msg_ptr, msg_len, msg_prio) == -1)
     {
