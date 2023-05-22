@@ -9,6 +9,7 @@
 #include "mqsource/my_mq_unlink.h"
 #include "mqsource/constants.h"
 #include "mqsource/my_mq_send.h"
+#include "mqsource/my_mq_getattr.h"
 #include "mqsource/my_mq_recieve.h"
 
 char mq_name[MQ_NAME_CHAR_LIMIT];
@@ -16,7 +17,7 @@ char mq_name[MQ_NAME_CHAR_LIMIT];
 void exit_cleanup();
 void signal_cleanup();
 int validate_input(char *user_input);
-void get_input(char *user_input, ssize_t *input_size, int max_input_len);
+void get_input(char *user_input, int input_size);
 
 int main()
 {
@@ -27,7 +28,7 @@ int main()
         .mq_curmsgs = 0};
 
     pid_t pid = getpid();
-    int prio;
+    unsigned int prio;
 
     sprintf(mq_name, "%s%d", MQ_PREFIX, pid);
 
@@ -53,10 +54,8 @@ int main()
 
     while (1)
     {
-        size_t *input_size = BASE_INPUT_SIZE;
-        char *user_input = (char *)malloc(input_size);
-        int max_msg_size = mq_attributes.mq_msgsize - (strlen(mq_name) + QUERY_DELIM_LEN);
-        get_input(user_input, &input_size, max_msg_size);
+        char user_input[INPUT_SIZE];
+        get_input(user_input, INPUT_SIZE);
 
         if (*user_input == 'q')
         {
@@ -69,7 +68,6 @@ int main()
         printf("Computing...\n");
         my_mq_recieve(client_mq, response, sizeof(response), &prio);
         sleep(COMPUTATION_TIME_IN_S);
-        free(user_input);
 
         printf("%s\n", response);
     }
@@ -90,30 +88,24 @@ int validate_input(char *user_input)
     return CORRECT_INPUT;
 }
 
-void get_input(char *user_input, ssize_t *input_size, int max_input_len)
+void get_input(char *user_input, int input_size)
 {
-    int input_len, validation;
+    int validation;
 
     printf("\nProvide an expression in a format <operand> <operator> <operand>\n");
     printf("Separate each expression element using a single whitespace (regexr requirement)\n");
-    printf("Avaliable operands: +, -, *, /, (Max expression length: %d)\n", max_input_len);
+    printf("Avaliable operands: +, -, *, /\n");
     printf("Alternatively you can type in \"q\" to exit the client program\n");
-    input_len = getline(&user_input, &input_size, stdin);
+    if (fgets(user_input, input_size, stdin) == NULL)
+    {
+        fprintf(stderr, "Fgets function call error.\n");
+        exit(EXIT_FAILURE);
+    }
 
-    if (input_len > max_input_len)
-    {
-        fprintf(stderr, "Provided message is too long!\n");
-        exit(EXIT_FAILURE);
-    }
-    if (input_len == -1)
-    {
-        perror("Getline function call error");
-        exit(EXIT_FAILURE);
-    }
     validation = validate_input(user_input);
     if (validation == WRONG_INPUT)
     {
-        get_input(user_input, input_size, max_input_len);
+        get_input(user_input, input_size);
     }
 }
 
