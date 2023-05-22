@@ -4,7 +4,6 @@
 #include <stdio.h>
 #include <signal.h>
 #include <stdlib.h>
-#include <errno.h>
 #include <math.h>
 
 #include "mqsource/my_mq_open.h"
