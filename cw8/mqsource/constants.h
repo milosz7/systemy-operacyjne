@@ -9,7 +9,7 @@
 
 #define MQ_PREFIX "/"
 #define MQ_NAME_CHAR_LIMIT 12 // MAX_INT_LEN + MQ_PREFIX + '\0'
-#define BASE_INPUT_SIZE 16
+#define INPUT_SIZE 64
 
 #define QUERY_DELIM "|"
 #define QUERY_DELIM_LEN 1
