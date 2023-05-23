@@ -4,14 +4,8 @@
 #include <string.h>
 #include <time.h>
 
-#include "semaphores/my_open_sem.h"
-#include "semaphores/my_close_sem.h"
-#include "semaphores/my_post_sem.h"
-#include "semaphores/my_wait_sem.h"
-#include "sharedmemory/my_shm_open.h"
-#include "sharedmemory/my_mmap.h"
-#include "sharedmemory/my_munmap.h"
-#include "sharedmemory/my_close.h"
+#include "source/semaphores.h"
+#include "source/sharedmemory.h"
 
 #define BUF_ELEMENT_SIZE 16
 #define BUF_ELEMENTS_AMOUNT 4

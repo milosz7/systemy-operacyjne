@@ -11,11 +11,9 @@ EXECS_S := $(patsubst %,%s.x,$(NAMES))
 EXECS_D1 := $(patsubst %,%d1.x,$(NAMES))
 EXECS_D2 := $(patsubst %,%d2.x,$(NAMES))
 
-LIB_NAMES_SEM := $(patsubst %.c,%,$(wildcard semaphores/*.c))
-LIB_OBJS_SEM := $(patsubst %,%.o,$(LIB_NAMES_SEM))
+LIB_OBJS_SEM := source/semaphores.o
 
-LIB_NAMES_SHM := $(patsubst %.c,%,$(wildcard sharedmemory/*.c))
-LIB_OBJS_SHM := $(patsubst %,%.o,$(LIB_NAMES_SHM))
+LIB_OBJS_SHM :=  source/sharedmemory.o
 
 LIB_DIR := ./lib
 LIB_NAME := cw7utils

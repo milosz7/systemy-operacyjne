@@ -5,14 +5,8 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
-#include "semaphores/my_unlink_sem.h"
-#include "semaphores/my_create_sem.h"
-#include "semaphores/my_post_sem.h"
-#include "semaphores/my_sem_getvalue.h"
-#include "semaphores/my_close_sem.h"
-#include "sharedmemory/my_shm_unlink.h"
-#include "sharedmemory/my_shm_open.h"
-#include "sharedmemory/my_ftruncate.h"
+#include "source/semaphores.h"
+#include "source/sharedmemory.h"
 
 #define BUF_ELEMENT_SIZE 16
 #define BUF_ELEMENTS_AMOUNT 4
@@ -20,9 +14,6 @@
 #define INITIAL_SEM_VALUE 0
 #define REQUIRED_ARGS_AMOUNT 5
 #define EXECUTABLE_PREFIX "./"
-#define SEMAPHORE_PROD_NAME "/semaphore_prod"
-#define SEMAPHORE_CONS_NAME "/semaphore_cons"
-#define SHM_NAME "/sharedmem"
 
 typedef struct
 {
