@@ -5,7 +5,10 @@
 
 #ifndef SEMAPHORES_H
 #define SEMAPHORES_H
-//Function to close a semaphore with error handling.
+#define SEMAPHORE_PROD_NAME "/semaphore_prod"
+#define SEMAPHORE_CONS_NAME "/semaphore_cons"
+#define SHM_NAME "/sharedmem"
+// Function to close a semaphore with error handling.
 void my_close_sem(sem_t *sem);
 // Function to open a semaphore with error handling
 sem_t *my_create_sem(char *name, mode_t mode, int oflag, int start_val);
