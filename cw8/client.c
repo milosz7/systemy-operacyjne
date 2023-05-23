@@ -5,12 +5,7 @@
 #include <signal.h>
 #include <regex.h>
 
-#include "mqsource/my_mq_open.h"
-#include "mqsource/my_mq_unlink.h"
-#include "mqsource/constants.h"
-#include "mqsource/my_mq_send.h"
-#include "mqsource/my_mq_getattr.h"
-#include "mqsource/my_mq_recieve.h"
+#include "source/mqutils.h"
 
 char mq_name[MQ_NAME_CHAR_LIMIT];
 

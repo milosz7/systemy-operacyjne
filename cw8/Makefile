@@ -11,8 +11,7 @@ EXECS_S := $(patsubst %,%s.x,$(NAMES))
 EXECS_D1 := $(patsubst %,%d1.x,$(NAMES))
 EXECS_D2 := $(patsubst %,%d2.x,$(NAMES))
 
-LIB_NAMES_MQ := $(patsubst %.c,%,$(wildcard mqsource/*.c))
-LIB_OBJS_MQ := $(patsubst %,%.o,$(LIB_NAMES_MQ))
+LIB_OBJS_MQ := source/mqutils.o
 
 LIB_DIR := ./lib
 LIB_NAME := mqutils

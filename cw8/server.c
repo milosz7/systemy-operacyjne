@@ -6,14 +6,7 @@
 #include <stdlib.h>
 #include <math.h>
 
-#include "mqsource/my_mq_open.h"
-#include "mqsource/my_mq_unlink.h"
-#include "mqsource/my_mq_recieve.h"
-#include "mqsource/my_mq_getattr.h"
-#include "mqsource/my_mq_setattr.h"
-#include "mqsource/my_mq_send.h"
-#include "mqsource/my_mq_close.h"
-#include "mqsource/constants.h"
+#include "source/mqutils.h"
 
 void exit_cleanup();
 void signal_cleanup();
